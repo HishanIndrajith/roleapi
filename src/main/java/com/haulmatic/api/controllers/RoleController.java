@@ -1,13 +1,14 @@
 package com.haulmatic.api.controllers;
 
-import com.haulmatic.api.models.Role;
-import com.haulmatic.api.services.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+        import com.haulmatic.api.models.DetailedRole;
+        import com.haulmatic.api.models.Role;
+        import com.haulmatic.api.services.RoleService;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.http.HttpStatus;
+        import org.springframework.http.ResponseEntity;
+        import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+        import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -22,18 +23,18 @@ public class RoleController {
     }
 
     @GetMapping("/roles/{nic}")
-    public ResponseEntity<Role> getRole(@PathVariable("nic") String nic) {
+    public ResponseEntity<DetailedRole> getRole(@PathVariable("nic") String nic) {
         return roleService.getRoleByNic(nic);
     }
 
     @PostMapping("/roles")
-    public ResponseEntity<Role> createRole(@RequestBody Role role) {
-        return roleService.createRole(role);
+    public ResponseEntity<DetailedRole> createRole(@RequestBody DetailedRole detailedRole) {
+        return roleService.createRole(detailedRole);
     }
 
     @PutMapping("/roles/{nic}")
-    public ResponseEntity<Role> updateRole(@PathVariable("nic") String nic, @RequestBody Role role) {
-        return roleService.updateRole(nic, role);
+    public ResponseEntity<DetailedRole> updateRole(@PathVariable("nic") String nic, @RequestBody DetailedRole detailedRole) {
+        return roleService.updateRole(nic, detailedRole);
     }
 
     @DeleteMapping("/roles/{nic}")

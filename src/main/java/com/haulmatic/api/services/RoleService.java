@@ -1,5 +1,6 @@
 package com.haulmatic.api.services;
 
+import com.haulmatic.api.models.DetailedRole;
 import com.haulmatic.api.models.Role;
 import com.haulmatic.api.models.Role.RoleType;
 import com.haulmatic.api.repositories.RoleRepository;
@@ -22,18 +23,18 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public ResponseEntity<Role> getRoleByNic(String nic) {
-        Optional<Role> roleData = roleRepository.findById(nic);
-        return roleData.map(role -> new ResponseEntity<>(role, HttpStatus.OK)).orElseGet(() ->
+    public ResponseEntity<DetailedRole> getRoleByNic(String nic) {
+        Optional<DetailedRole> roleData = roleRepository.findById(nic);
+        return roleData.map(detailedRole -> new ResponseEntity<>(detailedRole, HttpStatus.OK)).orElseGet(() ->
                 new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    public ResponseEntity<Role> createRole(Role role) {
-        Optional<Role> roleData = roleRepository.findById(role.getNic());
+    public ResponseEntity<DetailedRole> createRole(DetailedRole detailedRole) {
+        Optional<DetailedRole> roleData = roleRepository.findById(detailedRole.getNic());
         if (! roleData.isPresent()) {
             try {
-                Role roleSaved = roleRepository.save(role);
-                return new ResponseEntity<>(roleSaved, HttpStatus.CREATED);
+                DetailedRole detailedRoleSaved = roleRepository.save(detailedRole);
+                return new ResponseEntity<>(detailedRoleSaved, HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
             }
@@ -43,15 +44,15 @@ public class RoleService {
     }
 
 
-    public ResponseEntity<Role> updateRole(String nic, Role role) {
-        Optional<Role> roleData = roleRepository.findById(nic);
+    public ResponseEntity<DetailedRole> updateRole(String nic, DetailedRole detailedRole) {
+        Optional<DetailedRole> roleData = roleRepository.findById(nic);
         if (roleData.isPresent()) {
-            Role roleFromDb = roleData.get();
-            roleFromDb.setOrganization(role.getOrganization());
-            roleFromDb.setFirstName(role.getFirstName());
-            roleFromDb.setLastName(role.getLastName());
-            roleFromDb.setRoleType(role.getRoleType());
-            return new ResponseEntity<>(roleRepository.save(roleFromDb), HttpStatus.OK);
+            DetailedRole detailedRoleFromDb = roleData.get();
+            detailedRoleFromDb.setOrganization(detailedRole.getOrganization());
+            detailedRoleFromDb.setFirstName(detailedRole.getFirstName());
+            detailedRoleFromDb.setLastName(detailedRole.getLastName());
+            detailedRoleFromDb.setRoleType(detailedRole.getRoleType());
+            return new ResponseEntity<>(roleRepository.save(detailedRoleFromDb), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -81,7 +82,6 @@ public class RoleService {
         }
         try {
             List<Role> roles = roleRepository.findByOrganizationAndRoleType(organization, roleType);
-            roles.forEach(role -> {role.setOrganization(null);role.setRoleType(null);});
 
             if(roles.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
