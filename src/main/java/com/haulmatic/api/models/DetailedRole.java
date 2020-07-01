@@ -14,13 +14,13 @@ public class DetailedRole extends Role {
         return organization;
     }
 
-    public RoleType getRoleType() {
-        return roleType;
-    }
-
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public void setOrganization(String organization) {
         this.organization = organization;
+    }
+
+    public RoleType getRoleType() {
+        return roleType;
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

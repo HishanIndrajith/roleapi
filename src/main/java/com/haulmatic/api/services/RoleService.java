@@ -31,14 +31,14 @@ public class RoleService {
 
     public ResponseEntity<DetailedRole> createRole(DetailedRole detailedRole) {
         Optional<DetailedRole> roleData = roleRepository.findById(detailedRole.getNic());
-        if (! roleData.isPresent()) {
+        if (!roleData.isPresent()) {
             try {
                 DetailedRole detailedRoleSaved = roleRepository.save(detailedRole);
                 return new ResponseEntity<>(detailedRoleSaved, HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
             }
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
@@ -83,7 +83,7 @@ public class RoleService {
         try {
             List<Role> roles = roleRepository.findByOrganizationAndRoleType(organization, roleType);
 
-            if(roles.isEmpty()) {
+            if (roles.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(roles, HttpStatus.OK);
