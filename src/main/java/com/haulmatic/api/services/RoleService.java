@@ -24,12 +24,20 @@ public class RoleService {
     }
 
     public ResponseEntity<DetailedRole> getRoleByNic(String nic) {
+        if (nic == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         Optional<DetailedRole> roleData = roleRepository.findById(nic);
         return roleData.map(detailedRole -> new ResponseEntity<>(detailedRole, HttpStatus.OK)).orElseGet(() ->
                 new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     public ResponseEntity<DetailedRole> createRole(DetailedRole detailedRole) {
+        if (detailedRole.getNic() == null ||
+                detailedRole.getOrganization() == null ||
+                detailedRole.getFirstName() == null ||
+                detailedRole.getLastName() == null ||
+                detailedRole.getRoleType() == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         Optional<DetailedRole> roleData = roleRepository.findById(detailedRole.getNic());
         if (!roleData.isPresent()) {
             try {
@@ -45,6 +53,12 @@ public class RoleService {
 
 
     public ResponseEntity<DetailedRole> updateRole(String nic, DetailedRole detailedRole) {
+        if (nic == null ||
+                detailedRole.getOrganization() == null ||
+                detailedRole.getFirstName() == null ||
+                detailedRole.getLastName() == null ||
+                detailedRole.getRoleType() == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         Optional<DetailedRole> roleData = roleRepository.findById(nic);
         if (roleData.isPresent()) {
             DetailedRole detailedRoleFromDb = roleData.get();
@@ -59,6 +73,8 @@ public class RoleService {
     }
 
     public ResponseEntity<HttpStatus> deleteRole(String nic) {
+        if (nic == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
             roleRepository.deleteById(nic);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -69,6 +85,8 @@ public class RoleService {
 
     @GetMapping("/roles")
     public ResponseEntity<List<Role>> findByOrganization(String organization, String roleTypeStr) {
+        if (organization == null || roleTypeStr == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         RoleType roleType;
         switch (roleTypeStr) {
             case "Assistant":
