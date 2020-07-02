@@ -1,7 +1,5 @@
 package com.haulmatic.api.endpointtest;
 
-import static org.junit.Assert.assertEquals;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,27 +24,27 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 public class RoleServiceControllerTest {
 
-    private MockMvc mvc;
     @Autowired
     WebApplicationContext webApplicationContext;
-
     @Autowired
     RoleRepository roleRepository;
-
-    @Before
-    public void setUp() {
-        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
-
+    private MockMvc mvc;
     private String sample_nic = "953088670v";
     private String sample_firstName = "George";
     private String sample_lastName = "Lucas";
     private String sample_organization = "organization123";
     private Role.RoleType sample_roleType = Role.RoleType.ASSISTANT;
+
+    @Before
+    public void setUp() {
+        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
 
     @Test
     public void createRole() throws Exception {
@@ -80,6 +78,7 @@ public class RoleServiceControllerTest {
         assertEquals(response.getOrganization(), sample_organization);
         assertEquals(response.getRoleType(), sample_roleType);
     }
+
     @Test
     public void updateRole() throws Exception {
         // values that are edited in the test
@@ -218,7 +217,7 @@ public class RoleServiceControllerTest {
         String content = mvcResult.getResponse().getContentAsString();
         List roleList = mapFromJson(content, List.class);
         // Asserting the length of list received
-        assertEquals(2,roleList.size());
+        assertEquals(2, roleList.size());
     }
 
     private String mapToJson(Object obj) throws JsonProcessingException {
@@ -226,6 +225,7 @@ public class RoleServiceControllerTest {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return objectMapper.writeValueAsString(obj);
     }
+
     private <T> T mapFromJson(String json, Class<T> clazz) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
