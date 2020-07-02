@@ -74,7 +74,7 @@ public class RoleController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list"),
             @ApiResponse(code = 204, message = "No Content"),
-            @ApiResponse(code = 417, message = "Expectation Failed. Couldn't Delete"),
+            @ApiResponse(code = 417, message = "Expectation Failed"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @GetMapping("/roles")
