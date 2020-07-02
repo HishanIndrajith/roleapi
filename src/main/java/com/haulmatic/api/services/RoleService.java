@@ -87,7 +87,7 @@ public class RoleService {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
             roleRepository.deleteById(nic);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }

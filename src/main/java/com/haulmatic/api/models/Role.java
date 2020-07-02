@@ -1,8 +1,8 @@
 package com.haulmatic.api.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -46,7 +46,7 @@ public class Role {
         return createdDate;
     }
 
-    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
@@ -56,7 +56,7 @@ public class Role {
         return lastModifiedDate;
     }
 
-    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
