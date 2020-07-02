@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,11 +37,16 @@ public class RoleService {
                 detailedRole.getOrganization() == null ||
                 detailedRole.getFirstName() == null ||
                 detailedRole.getLastName() == null ||
-                detailedRole.getRoleType() == null)
+                detailedRole.getRoleType() == null ||
+                detailedRole.getCreatedDate() != null ||
+                detailedRole.getLastModifiedDate() != null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         Optional<DetailedRole> roleData = roleRepository.findById(detailedRole.getNic());
         if (!roleData.isPresent()) {
             try {
+                Date currentDate = new Date();
+                detailedRole.setCreatedDate(currentDate);
+                detailedRole.setLastModifiedDate(currentDate);
                 DetailedRole detailedRoleSaved = roleRepository.save(detailedRole);
                 return new ResponseEntity<>(detailedRoleSaved, HttpStatus.CREATED);
             } catch (Exception e) {
@@ -57,7 +63,10 @@ public class RoleService {
                 detailedRole.getOrganization() == null ||
                 detailedRole.getFirstName() == null ||
                 detailedRole.getLastName() == null ||
-                detailedRole.getRoleType() == null)
+                detailedRole.getRoleType() == null ||
+                detailedRole.getNic() != null ||
+                detailedRole.getCreatedDate() != null ||
+                detailedRole.getLastModifiedDate() != null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         Optional<DetailedRole> roleData = roleRepository.findById(nic);
         if (roleData.isPresent()) {
@@ -66,6 +75,7 @@ public class RoleService {
             detailedRoleFromDb.setFirstName(detailedRole.getFirstName());
             detailedRoleFromDb.setLastName(detailedRole.getLastName());
             detailedRoleFromDb.setRoleType(detailedRole.getRoleType());
+            detailedRoleFromDb.setLastModifiedDate(new Date());
             return new ResponseEntity<>(roleRepository.save(detailedRoleFromDb), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
