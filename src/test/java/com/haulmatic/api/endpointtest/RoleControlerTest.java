@@ -1,4 +1,4 @@
-package com.haulmatic.api.unittest;
+package com.haulmatic.api.endpointtest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,7 +71,6 @@ public class RoleControlerTest {
 
     @Test
     public void testCreateRoleEndPoint() throws JsonProcessingException {
-
         String roleType = "Driver";
         // Find and Delete any entry with testing nic
         Optional<DetailedRole> roleData = roleRepository.findById(nic);
@@ -110,7 +109,6 @@ public class RoleControlerTest {
 
     @Test
     public void testUpdateRoleEndPoint() throws JsonProcessingException {
-
         String organizationOld = "organizationOld";
         String roleTypeNew = "Driver";
         // Find and Delete any entry with testing nic
@@ -161,7 +159,6 @@ public class RoleControlerTest {
 
     @Test
     public void testDeleteRoleEndPoint() {
-
         //Create a new role using the RoleRepository API
         DetailedRole role = new DetailedRole();
         role.setNic(nic);
