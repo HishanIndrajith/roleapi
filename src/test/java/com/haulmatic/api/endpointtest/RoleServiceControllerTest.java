@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.haulmatic.api.Application;
-import com.haulmatic.api.models.DetailedRole;
-import com.haulmatic.api.models.Role;
+import com.haulmatic.api.entities.Role;
 import com.haulmatic.api.repositories.RoleRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,16 +29,16 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest(classes = Application.class)
 public class RoleServiceControllerTest {
 
+    private final String sample_nic = "953088670v";
+    private final String sample_firstName = "George";
+    private final String sample_lastName = "Lucas";
+    private final String sample_organization = "organization123";
+    private final Role.RoleType sample_roleType = Role.RoleType.ASSISTANT;
     @Autowired
     WebApplicationContext webApplicationContext;
     @Autowired
     RoleRepository roleRepository;
     private MockMvc mvc;
-    private String sample_nic = "953088670v";
-    private String sample_firstName = "George";
-    private String sample_lastName = "Lucas";
-    private String sample_organization = "organization123";
-    private Role.RoleType sample_roleType = Role.RoleType.ASSISTANT;
 
     @Before
     public void setUp() {
@@ -48,7 +47,7 @@ public class RoleServiceControllerTest {
 
     @Test
     public void createRole() throws Exception {
-        DetailedRole role = new DetailedRole();
+        Role role = new Role();
         // Setting the sample values
         role.setNic(sample_nic);
         role.setFirstName(sample_firstName);
@@ -70,7 +69,7 @@ public class RoleServiceControllerTest {
         assertEquals(201, status);
         // Obtain json string excluding null
         String content = mvcResult.getResponse().getContentAsString();
-        DetailedRole response = mapFromJson(content, DetailedRole.class);
+        Role response = mapFromJson(content, Role.class);
         // Asserting the response
         assertEquals(response.getNic(), sample_nic);
         assertEquals(response.getFirstName(), sample_firstName);
@@ -84,7 +83,7 @@ public class RoleServiceControllerTest {
         // values that are edited in the test
         String organizationEdited = "Organization_edited";
         String lastNameEdited = "Kevin";
-        DetailedRole role = new DetailedRole();
+        Role role = new Role();
         // Setting the sample values
         role.setNic(sample_nic);
         role.setFirstName(sample_firstName);
@@ -112,7 +111,7 @@ public class RoleServiceControllerTest {
         // Asserting the response code
         assertEquals(200, status);
         String content = mvcResult.getResponse().getContentAsString();
-        DetailedRole response = mapFromJson(content, DetailedRole.class);
+        Role response = mapFromJson(content, Role.class);
         // Asserting the response
         assertEquals(response.getNic(), sample_nic);
         assertEquals(response.getFirstName(), sample_firstName);
@@ -123,7 +122,7 @@ public class RoleServiceControllerTest {
 
     @Test
     public void deleteRole() throws Exception {
-        DetailedRole role = new DetailedRole();
+        Role role = new Role();
         // Setting the sample values
         role.setNic(sample_nic);
         role.setFirstName(sample_firstName);
@@ -138,14 +137,14 @@ public class RoleServiceControllerTest {
         int status = mvcResult.getResponse().getStatus();
         // assert the response code
         assertEquals(200, status);
-        Optional<DetailedRole> objectIfNotDeleted = roleRepository.findById(sample_nic);
+        Optional<Role> objectIfNotDeleted = roleRepository.findById(sample_nic);
         // assert that it is deleted or not
         assertEquals(Optional.empty(), objectIfNotDeleted);
     }
 
     @Test
     public void retrieveRole() throws Exception {
-        DetailedRole role = new DetailedRole();
+        Role role = new Role();
         // Setting the sample values
         role.setNic(sample_nic);
         role.setFirstName(sample_firstName);
@@ -163,7 +162,7 @@ public class RoleServiceControllerTest {
         assertEquals(200, status);
         // get the response
         String content = mvcResult.getResponse().getContentAsString();
-        DetailedRole response = mapFromJson(content, DetailedRole.class);
+        Role response = mapFromJson(content, Role.class);
         // Asserting the response
         assertEquals(response.getNic(), sample_nic);
         assertEquals(response.getFirstName(), sample_firstName);
@@ -177,7 +176,7 @@ public class RoleServiceControllerTest {
         //Create 3 new sample role using the RoleRepository API, first two are similar in organization and role type.
         //Third is different in role type
         //When searched a list using filtering organization and roletype in first two size of list should be 2
-        DetailedRole role1 = new DetailedRole();
+        Role role1 = new Role();
         role1.setNic(sample_nic);
         role1.setFirstName(sample_firstName);
         role1.setLastName(sample_lastName);
@@ -185,7 +184,7 @@ public class RoleServiceControllerTest {
         role1.setRoleType(sample_roleType);
         roleRepository.save(role1);
 
-        DetailedRole role2 = new DetailedRole();
+        Role role2 = new Role();
         role2.setNic("945187552v");
         role2.setFirstName("Nicholas");
         role2.setLastName("Lyman");
@@ -193,7 +192,7 @@ public class RoleServiceControllerTest {
         role2.setRoleType(sample_roleType);
         roleRepository.save(role2);
 
-        DetailedRole role3 = new DetailedRole();
+        Role role3 = new Role();
         role3.setNic("945178962v");
         role3.setFirstName("Piers");
         role3.setLastName("Hughes");

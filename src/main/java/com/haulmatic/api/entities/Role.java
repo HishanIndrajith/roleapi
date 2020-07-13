@@ -1,4 +1,4 @@
-package com.haulmatic.api.models;
+package com.haulmatic.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,6 +14,8 @@ public class Role {
     private String lastName;
     @Id
     private String nic;
+    private String organization;
+    private RoleType roleType;
     private Date createdDate;
     private Date lastModifiedDate;
 
@@ -56,9 +58,24 @@ public class Role {
         return lastModifiedDate;
     }
 
-    @ApiModelProperty(hidden = true)
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public RoleType getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
     }
 
     public enum RoleType {

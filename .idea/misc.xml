@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <pattern value="com.haulmatic.api.dto.SearchResultRoleDto" method="setNic" />
+    <pattern value="com.haulmatic.api.dto.SearchResultRoleDto" method="getNic" />
+    <pattern value="com.haulmatic.api.dto.SearchResultRoleDto" method="setLastName" />
+    <pattern value="com.haulmatic.api.dto.SearchResultRoleDto" method="getLastName" />
+    <pattern value="com.haulmatic.api.dto.SearchResultRoleDto" method="setFirstName" />
+    <pattern value="com.haulmatic.api.dto.SearchResultRoleDto" method="getFirstName" />
+    <pattern value="com.haulmatic.api.dto.SearchResultRoleDto" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>

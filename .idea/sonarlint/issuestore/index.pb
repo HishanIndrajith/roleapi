@@ -187,3 +187,9 @@ i
 9src/main/java/com/haulmatic/api/services/RoleService.java,9\c\9c87285ba81b12507d2066c14ae13faa2ba63372
 `
 0src/main/java/com/haulmatic/api/Application.java,0\2\029384a898c85f6ed1e836eb1c203860086c1770
+[
++.idea/libraries/Maven__junit_junit_4_12.xml,a\f\afa6ca72908af2e838d0cb108eb24f143bc62da7
+w
+G.idea/libraries/Maven__org_junit_vintage_junit_vintage_engine_5_5_2.xml,b\9\b929790dc1adeeeb9b554bd4154622d682981b93
+{
+Ksrc/test/java/com/haulmatic/api/endpointtest/RoleServiceControllerTest.java,a\9\a92a330f4319c4134bbeb7a7d92f5ea19b3d0356
